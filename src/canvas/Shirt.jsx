@@ -8,13 +8,16 @@ import state from "../store";
 const Shirt = () => {
   const snap = useSnapshot(state);
   const { nodes, materials } = useGLTF("/shirt_baked.glb");
-  const logoRef = useRef();
 
   const logoTexture = useTexture(snap.logoDecal);
   const fullTexture = useTexture(snap.fullDecal);
 
+  const logoRef = useRef();
+
   useFrame((state, delta) => {
     easing.dampC(materials.lambert1.color, snap.color, 0.25, delta);
+
+    // Update logo position based on mouse movement
     if (logoRef.current) {
       const mouseX = (state.mouse.x * window.innerWidth) / 2;
       const mouseY = (state.mouse.y * window.innerHeight) / 2;
@@ -23,6 +26,7 @@ const Shirt = () => {
       logoRef.current.position.y = -(mouseY / window.innerHeight) * 2 + 1;
     }
   });
+
   const stateString = JSON.stringify(snap);
 
   return (
