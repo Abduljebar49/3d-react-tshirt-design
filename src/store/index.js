@@ -8,6 +8,7 @@ const state = proxy({
   logoDecal: "./threejs.png",
   fullDecal: "./threejs.png",
   rotating:false,
+  tshirt:"./images/shirt.png"
 });
 
 export default state;
