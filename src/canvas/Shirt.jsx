@@ -27,21 +27,13 @@ const Shirt = () => {
     if (isDragging && logoRef.current && heartRef.current) {
       const { clientX, clientY } = event.touches ? event.touches[0] : event;
 
-      // Calculate mouse position relative to the canvas size
       const mouseX = (clientX / size.width) * 2 - 1;
       const mouseY = -(clientY / size.height) * 2 + 1;
 
-      // Create a vector with the mouse coordinates in normalized device space
       const mouseVector = new THREE.Vector3(mouseX, mouseY, 0.5);
-      
-      // Unproject the mouse vector into world space
       mouseVector.unproject(camera);
-
-      // Calculate the logo's scale in the scene
       const scale = new THREE.Vector3();
       heartRef.current.getWorldScale(scale);
-
-      // Adjust the mouseVector based on logo's scale to maintain its size
       mouseVector.sub(heartRef.current.position).divide(scale).add(heartRef.current.position);
 
       logoRef.current.position.copy(mouseVector);
