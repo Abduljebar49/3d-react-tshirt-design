@@ -19,7 +19,7 @@ const Customizer = () => {
   const snap = useSnapshot(state);
 
   const [file, setFile] = useState("");
-
+  const [isRotating, setIsRotating] = useState(snap.rotating)
   const [prompt, setPrompt] = useState("");
   const [generatingImg, setGeneratingImg] = useState(false);
 
@@ -78,21 +78,19 @@ const Customizer = () => {
     }
   };
 
-
   const handleActiveFilterTab = (tabName) => {
     switch (tabName) {
       case "logoShirt":
-          state.isLogoTexture = !activeFilterTab[tabName];
+        state.isLogoTexture = !activeFilterTab[tabName];
         break;
       case "stylishShirt":
-          state.isFullTexture = !activeFilterTab[tabName];
+        state.isFullTexture = !activeFilterTab[tabName];
         break;
       default:
         state.isLogoTexture = true;
         state.isFullTexture = false;
         break;
     }
-
 
     // after setting the state, activeFilterTab is updated
 
@@ -143,6 +141,15 @@ const Customizer = () => {
               title="Go Back"
               handleClick={() => (state.intro = true)}
               customStyles="w-fit px-4 py-2.5 font-bold text-sm"
+            />
+            <CustomButton
+              type="filled"
+              title={ isRotating ? "Stop" : "Rotate"}
+              handleClick={() => {
+                state.rotating = !state.rotating;
+                setIsRotating(state.rotating)
+              }}
+              customStyles="w-fit px-4 py-2.5 font-bold text-sm ml-3"
             />
           </motion.div>
 
